@@ -18,9 +18,18 @@ __main
 		MOV   R3, #7
 		MOV   R7, #19
 		MOV   R1, #0xbeef
+		MOV	  R2, #0x000f0000
 		BL    LEDSETUP
 		BL    LEDON
+		BL    countdown
+		BL    LEDOFF
 		B     forever
+
+countdown
+		SUBS   R2, R2, #1
+		BNE    countdown
+		BX LR
+
 
 fib		
 	; Your code goes here!
