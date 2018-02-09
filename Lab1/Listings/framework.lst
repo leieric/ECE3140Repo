@@ -1,0 +1,624 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             Myprog, CODE, READONLY
+    2 00000000                 ENTRY
+    3 00000000                 EXPORT           __main
+    4 00000000         
+    5 00000000         ;don't change these addresses!
+    6 00000000 4004A058 
+                       PCR22   EQU              0x4004A058  ;PORTB_PCR22  addre
+                                                            ss
+    7 00000000 40048038 
+                       SCGC5   EQU              0x40048038  ;SIM_SCGC5    addre
+                                                            ss
+    8 00000000 400FF054 
+                       PDDR    EQU              0x400FF054  ;GPIOB_PDDR   addre
+                                                            ss
+    9 00000000 400FF048 
+                       PCOR    EQU              0x400FF048  ;GPIOB_PCOR   addre
+                                                            ss
+   10 00000000 400FF044 
+                       PSOR    EQU              0x400FF044  ;GPIOB_PSOR   addre
+                                                            ss
+   11 00000000         
+   12 00000000 00000400 
+                       ten     EQU              0x00000400  ; 1 << 10
+   13 00000000 00000100 
+                       eight   EQU              0x00000100  ; 1 << 8
+   14 00000000 00400000 
+                       twentytwo
+                               EQU              0x00400000  ; 1 << 22
+   15 00000000         
+   16 00000000 000F0000 
+                       wait    EQU              0x000f0000
+   17 00000000 002D0000 
+                       wait3   EQU              0x002d0000
+   18 00000000         
+   19 00000000         __main
+   20 00000000         ; Your code goes here!
+   21 00000000 F04F 0307       MOV              R3, #7
+   22 00000004 F04F 0713       MOV              R7, #19
+   23 00000008 F64B 61EF       MOV              R1, #0xbeef
+   24 0000000C F04F 0000       MOV              R0, #0
+   25 00000010 F000 F8D8       BL               LEDSETUP
+   26 00000014 2800            CMP              R0, #0
+   27 00000016 BF08 F000 
+              F825             BLEQ             zero
+   28 0000001C 2801            CMP              R0, #1
+   29 0000001E BF08 F000 
+              F82F             BLEQ             one
+   30 00000024 2802            CMP              R0, #2
+   31 00000026 BF08 F000 
+              F839             BLEQ             two
+   32 0000002C 2803            CMP              R0, #3
+   33 0000002E BF08 F000 
+              F843             BLEQ             three
+   34 00000034 2804            CMP              R0, #4
+   35 00000036 BF08 F000 
+              F84D             BLEQ             four
+   36 0000003C 2805            CMP              R0, #5
+   37 0000003E BF08 F000 
+              F857             BLEQ             five
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   38 00000044 2806            CMP              R0, #6
+   39 00000046 BF08 F000 
+              F861             BLEQ             six
+   40 0000004C 2807            CMP              R0, #7
+   41 0000004E BF08 F000 
+              F86B             BLEQ             seven
+   42 00000054 2808            CMP              R0, #8
+   43 00000056 BF08 F000 
+              F875             BLEQ             eightt
+   44 0000005C 2809            CMP              R0, #9
+   45 0000005E BF08 F000 
+              F87F             BLEQ             nine
+   46 00000064 E0CB            B                forever
+   47 00000066         
+   48 00000066         zero
+   49 00000066 B500            PUSH             {LR}
+   50 00000068 F000 F89C       BL               dash
+   51 0000006C F000 F89A       BL               dash
+   52 00000070 F000 F898       BL               dash
+   53 00000074 F000 F896       BL               dash
+   54 00000078 F000 F894       BL               dash
+   55 0000007C F85D EB04       POP              {LR}
+   56 00000080 4770            BX               LR
+   57 00000082         
+   58 00000082         one
+   59 00000082 B500            PUSH             {LR}
+   60 00000084 F000 F87E       BL               dot
+   61 00000088 F000 F88C       BL               dash
+   62 0000008C F000 F88A       BL               dash
+   63 00000090 F000 F888       BL               dash
+   64 00000094 F000 F886       BL               dash
+   65 00000098 F85D EB04       POP              {LR}
+   66 0000009C 4770            BX               LR
+   67 0000009E         
+   68 0000009E         two
+   69 0000009E B500            PUSH             {LR}
+   70 000000A0 F000 F870       BL               dot
+   71 000000A4 F000 F86E       BL               dot
+   72 000000A8 F000 F87C       BL               dash
+   73 000000AC F000 F87A       BL               dash
+   74 000000B0 F000 F878       BL               dash
+   75 000000B4 F85D EB04       POP              {LR}
+   76 000000B8 4770            BX               LR
+   77 000000BA         
+   78 000000BA         three
+   79 000000BA B500            PUSH             {LR}
+   80 000000BC F000 F862       BL               dot
+   81 000000C0 F000 F860       BL               dot
+   82 000000C4 F000 F85E       BL               dot
+   83 000000C8 F000 F86C       BL               dash
+   84 000000CC F000 F86A       BL               dash
+   85 000000D0 F85D EB04       POP              {LR}
+   86 000000D4 4770            BX               LR
+   87 000000D6         
+   88 000000D6         four
+   89 000000D6 B500            PUSH             {LR}
+   90 000000D8 F000 F854       BL               dot
+   91 000000DC F000 F852       BL               dot
+   92 000000E0 F000 F850       BL               dot
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   93 000000E4 F000 F84E       BL               dot
+   94 000000E8 F000 F85C       BL               dash
+   95 000000EC F85D EB04       POP              {LR}
+   96 000000F0 4770            BX               LR
+   97 000000F2         
+   98 000000F2         five
+   99 000000F2 B500            PUSH             {LR}
+  100 000000F4 F000 F846       BL               dot
+  101 000000F8 F000 F844       BL               dot
+  102 000000FC F000 F842       BL               dot
+  103 00000100 F000 F840       BL               dot
+  104 00000104 F000 F83E       BL               dot
+  105 00000108 F85D EB04       POP              {LR}
+  106 0000010C 4770            BX               LR
+  107 0000010E         
+  108 0000010E         six
+  109 0000010E B500            PUSH             {LR}
+  110 00000110 F000 F848       BL               dash
+  111 00000114 F000 F836       BL               dot
+  112 00000118 F000 F834       BL               dot
+  113 0000011C F000 F832       BL               dot
+  114 00000120 F000 F830       BL               dot
+  115 00000124 F85D EB04       POP              {LR}
+  116 00000128 4770            BX               LR
+  117 0000012A         
+  118 0000012A         seven
+  119 0000012A B500            PUSH             {LR}
+  120 0000012C F000 F83A       BL               dash
+  121 00000130 F000 F838       BL               dash
+  122 00000134 F000 F826       BL               dot
+  123 00000138 F000 F824       BL               dot
+  124 0000013C F000 F822       BL               dot
+  125 00000140 F85D EB04       POP              {LR}
+  126 00000144 4770            BX               LR
+  127 00000146         
+  128 00000146         eightt
+  129 00000146 B500            PUSH             {LR}
+  130 00000148 F000 F82C       BL               dash
+  131 0000014C F000 F82A       BL               dash
+  132 00000150 F000 F828       BL               dash
+  133 00000154 F000 F816       BL               dot
+  134 00000158 F000 F814       BL               dot
+  135 0000015C F85D EB04       POP              {LR}
+  136 00000160 4770            BX               LR
+  137 00000162         
+  138 00000162         nine
+  139 00000162 B500            PUSH             {LR}
+  140 00000164 F000 F81E       BL               dash
+  141 00000168 F000 F81C       BL               dash
+  142 0000016C F000 F81A       BL               dash
+  143 00000170 F000 F818       BL               dash
+  144 00000174 F000 F806       BL               dot
+  145 00000178 F85D EB04       POP              {LR}
+  146 0000017C 4770            BX               LR
+  147 0000017E         
+  148 0000017E         countdown
+  149 0000017E 1E52            SUBS             R2, R2, #1
+  150 00000180 D1FD            BNE              countdown
+  151 00000182 4770            BX               LR
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  152 00000184         
+  153 00000184         dot
+  154 00000184 B504            PUSH             {LR, R2}
+  155 00000186 F000 F82C       BL               LEDON
+  156 0000018A F44F 2270       MOV              R2, #wait
+  157 0000018E F7FF FFF6       BL               countdown
+  158 00000192 F000 F82D       BL               LEDOFF
+  159 00000196 F44F 2270       MOV              R2, #wait
+  160 0000019A F7FF FFF0       BL               countdown
+  161 0000019E E8BD 4004       POP              {LR, R2}
+  162 000001A2 4770            BX               LR
+  163 000001A4         
+  164 000001A4         dash
+  165 000001A4 B504            PUSH             {LR, R2}
+  166 000001A6 F000 F81C       BL               LEDON
+  167 000001AA F44F 1234       MOV              R2, #wait3
+  168 000001AE F7FF FFE6       BL               countdown
+  169 000001B2 F000 F81D       BL               LEDOFF
+  170 000001B6 F44F 2270       MOV              R2, #wait
+  171 000001BA F7FF FFE0       BL               countdown
+  172 000001BE E8BD 4004       POP              {LR, R2}
+  173 000001C2 4770            BX               LR
+  174 000001C4         
+  175 000001C4         
+  176 000001C4         fib
+  177 000001C4         ; Your code goes here!
+  178 000001C4         
+  179 000001C4         
+  180 000001C4         
+  181 000001C4         ; Call this function first to set up the LED
+  182 000001C4         LEDSETUP
+  183 000001C4 B430            PUSH             {R4, R5}    ; To preserve R4 an
+                                                            d R5
+  184 000001C6 F44F 6480       LDR              R4, =ten    ; Load the value 1 
+                                                            << 10
+  185 000001CA 4D0D            LDR              R5, =SCGC5
+  186 000001CC 602C            STR              R4, [R5]
+  187 000001CE         
+  188 000001CE F44F 7480       LDR              R4, =eight
+  189 000001D2 4D0C            LDR              R5, =PCR22
+  190 000001D4 602C            STR              R4, [R5]
+  191 000001D6         
+  192 000001D6 F44F 0480       LDR              R4, =twentytwo
+  193 000001DA 4D0B            LDR              R5, =PDDR
+  194 000001DC 602C            STR              R4, [R5]
+  195 000001DE BC30            POP              {R4, R5}
+  196 000001E0 4770            BX               LR
+  197 000001E2         
+  198 000001E2         ; The functions below are for you to use freely      
+  199 000001E2         LEDON
+  200 000001E2 B430            PUSH             {R4, R5}
+  201 000001E4 F44F 0480       LDR              R4, =twentytwo
+  202 000001E8 4D08            LDR              R5, =PCOR
+  203 000001EA 602C            STR              R4, [R5]
+  204 000001EC BC30            POP              {R4, R5}
+  205 000001EE 4770            BX               LR
+  206 000001F0         LEDOFF
+  207 000001F0 B430            PUSH             {R4, R5}
+  208 000001F2 F44F 0480       LDR              R4, =twentytwo
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+  209 000001F6 4D06            LDR              R5, =PSOR
+  210 000001F8 602C            STR              R4, [R5]
+  211 000001FA BC30            POP              {R4, R5}
+  212 000001FC 4770            BX               LR
+  213 000001FE         
+  214 000001FE         forever
+  215 000001FE E7FE            B                forever     ; wait here forever
+                                                             
+  216 00000200                 END
+              40048038 
+              4004A058 
+              400FF054 
+              400FF048 
+              400FF044 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
+erwork --depend=.\objects\framework.d -o.\objects\framework.o -I.\RTE\Device\MK
+64FN1M0VLL12 -I.\RTE\_Target_1 -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Incl
+ude -IC:\Keil_v5\ARM\PACK\NXP\MK64F12_DFP\10.0.0 --predefine="__EVAL SETA 1" --
+predefine="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="
+CPU_MK64FN1M0VLL12 SETA 1" --list=.\listings\framework.lst Framework.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+LEDOFF 000001F0
+
+Symbol: LEDOFF
+   Definitions
+      At line 206 in file Framework.s
+   Uses
+      At line 158 in file Framework.s
+      At line 169 in file Framework.s
+
+LEDON 000001E2
+
+Symbol: LEDON
+   Definitions
+      At line 199 in file Framework.s
+   Uses
+      At line 155 in file Framework.s
+      At line 166 in file Framework.s
+
+LEDSETUP 000001C4
+
+Symbol: LEDSETUP
+   Definitions
+      At line 182 in file Framework.s
+   Uses
+      At line 25 in file Framework.s
+Comment: LEDSETUP used once
+Myprog 00000000
+
+Symbol: Myprog
+   Definitions
+      At line 1 in file Framework.s
+   Uses
+      None
+Comment: Myprog unused
+__main 00000000
+
+Symbol: __main
+   Definitions
+      At line 19 in file Framework.s
+   Uses
+      At line 3 in file Framework.s
+Comment: __main used once
+countdown 0000017E
+
+Symbol: countdown
+   Definitions
+      At line 148 in file Framework.s
+   Uses
+      At line 150 in file Framework.s
+      At line 157 in file Framework.s
+      At line 160 in file Framework.s
+      At line 168 in file Framework.s
+      At line 171 in file Framework.s
+
+dash 000001A4
+
+Symbol: dash
+   Definitions
+      At line 164 in file Framework.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+   Uses
+      At line 50 in file Framework.s
+      At line 51 in file Framework.s
+      At line 52 in file Framework.s
+      At line 53 in file Framework.s
+      At line 54 in file Framework.s
+      At line 61 in file Framework.s
+      At line 62 in file Framework.s
+      At line 63 in file Framework.s
+      At line 64 in file Framework.s
+      At line 72 in file Framework.s
+      At line 73 in file Framework.s
+      At line 74 in file Framework.s
+      At line 83 in file Framework.s
+      At line 84 in file Framework.s
+      At line 94 in file Framework.s
+      At line 110 in file Framework.s
+      At line 120 in file Framework.s
+      At line 121 in file Framework.s
+      At line 130 in file Framework.s
+      At line 131 in file Framework.s
+      At line 132 in file Framework.s
+      At line 140 in file Framework.s
+      At line 141 in file Framework.s
+      At line 142 in file Framework.s
+      At line 143 in file Framework.s
+
+dot 00000184
+
+Symbol: dot
+   Definitions
+      At line 153 in file Framework.s
+   Uses
+      At line 60 in file Framework.s
+      At line 70 in file Framework.s
+      At line 71 in file Framework.s
+      At line 80 in file Framework.s
+      At line 81 in file Framework.s
+      At line 82 in file Framework.s
+      At line 90 in file Framework.s
+      At line 91 in file Framework.s
+      At line 92 in file Framework.s
+      At line 93 in file Framework.s
+      At line 100 in file Framework.s
+      At line 101 in file Framework.s
+      At line 102 in file Framework.s
+      At line 103 in file Framework.s
+      At line 104 in file Framework.s
+      At line 111 in file Framework.s
+      At line 112 in file Framework.s
+      At line 113 in file Framework.s
+      At line 114 in file Framework.s
+      At line 122 in file Framework.s
+      At line 123 in file Framework.s
+      At line 124 in file Framework.s
+      At line 133 in file Framework.s
+      At line 134 in file Framework.s
+      At line 144 in file Framework.s
+
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+eightt 00000146
+
+Symbol: eightt
+   Definitions
+      At line 128 in file Framework.s
+   Uses
+      At line 43 in file Framework.s
+Comment: eightt used once
+fib 000001C4
+
+Symbol: fib
+   Definitions
+      At line 176 in file Framework.s
+   Uses
+      None
+Comment: fib unused
+five 000000F2
+
+Symbol: five
+   Definitions
+      At line 98 in file Framework.s
+   Uses
+      At line 37 in file Framework.s
+Comment: five used once
+forever 000001FE
+
+Symbol: forever
+   Definitions
+      At line 214 in file Framework.s
+   Uses
+      At line 46 in file Framework.s
+      At line 215 in file Framework.s
+
+four 000000D6
+
+Symbol: four
+   Definitions
+      At line 88 in file Framework.s
+   Uses
+      At line 35 in file Framework.s
+Comment: four used once
+nine 00000162
+
+Symbol: nine
+   Definitions
+      At line 138 in file Framework.s
+   Uses
+      At line 45 in file Framework.s
+Comment: nine used once
+one 00000082
+
+Symbol: one
+   Definitions
+      At line 58 in file Framework.s
+   Uses
+      At line 29 in file Framework.s
+Comment: one used once
+seven 0000012A
+
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: seven
+   Definitions
+      At line 118 in file Framework.s
+   Uses
+      At line 41 in file Framework.s
+Comment: seven used once
+six 0000010E
+
+Symbol: six
+   Definitions
+      At line 108 in file Framework.s
+   Uses
+      At line 39 in file Framework.s
+Comment: six used once
+three 000000BA
+
+Symbol: three
+   Definitions
+      At line 78 in file Framework.s
+   Uses
+      At line 33 in file Framework.s
+Comment: three used once
+two 0000009E
+
+Symbol: two
+   Definitions
+      At line 68 in file Framework.s
+   Uses
+      At line 31 in file Framework.s
+Comment: two used once
+zero 00000066
+
+Symbol: zero
+   Definitions
+      At line 48 in file Framework.s
+   Uses
+      At line 27 in file Framework.s
+Comment: zero used once
+20 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+PCOR 400FF048
+
+Symbol: PCOR
+   Definitions
+      At line 9 in file Framework.s
+   Uses
+      At line 202 in file Framework.s
+Comment: PCOR used once
+PCR22 4004A058
+
+Symbol: PCR22
+   Definitions
+      At line 6 in file Framework.s
+   Uses
+      At line 189 in file Framework.s
+Comment: PCR22 used once
+PDDR 400FF054
+
+Symbol: PDDR
+   Definitions
+      At line 8 in file Framework.s
+   Uses
+      At line 193 in file Framework.s
+Comment: PDDR used once
+PSOR 400FF044
+
+Symbol: PSOR
+   Definitions
+      At line 10 in file Framework.s
+   Uses
+      At line 209 in file Framework.s
+Comment: PSOR used once
+SCGC5 40048038
+
+Symbol: SCGC5
+   Definitions
+      At line 7 in file Framework.s
+   Uses
+      At line 185 in file Framework.s
+Comment: SCGC5 used once
+eight 00000100
+
+Symbol: eight
+   Definitions
+      At line 13 in file Framework.s
+   Uses
+      At line 188 in file Framework.s
+Comment: eight used once
+ten 00000400
+
+Symbol: ten
+   Definitions
+      At line 12 in file Framework.s
+   Uses
+      At line 184 in file Framework.s
+Comment: ten used once
+twentytwo 00400000
+
+Symbol: twentytwo
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Absolute symbols
+
+   Definitions
+      At line 14 in file Framework.s
+   Uses
+      At line 192 in file Framework.s
+      At line 201 in file Framework.s
+      At line 208 in file Framework.s
+
+wait 000F0000
+
+Symbol: wait
+   Definitions
+      At line 16 in file Framework.s
+   Uses
+      At line 156 in file Framework.s
+      At line 159 in file Framework.s
+      At line 170 in file Framework.s
+
+wait3 002D0000
+
+Symbol: wait3
+   Definitions
+      At line 17 in file Framework.s
+   Uses
+      At line 167 in file Framework.s
+Comment: wait3 used once
+10 symbols
+367 symbols in table
